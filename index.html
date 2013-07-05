@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<h1><em style="color: navy; font-size: 2em;">Accelerometer </em> </h1>
+
+<table border="1">
+<tr>
+<td> x-axis </td>
+<td> y-axis </td>
+<td> z-axis </td>
+</tr>
+<tr>
+<td> represents up/down </td>
+<td> represents left/right </td>
+<td> represents forward/back </td>
+</tr>
+
+
+
+</table>
+
+<body>
+	<div>
+		<h3>
+			x-axis:</h3>
+		<input id="x" type="text" value="0" />
+		<h3>
+			y-axis:</h3>
+		<input id="y" type="text" value="0" />
+		<h3>
+			z-axis:</h3>
+		<input id="z" type="text" value="0" />
+		<h3>
+			Time in the air:</h3>
+		<input id="t" type="text" value="0">
+		<h3>
+			Height thrown:</h3>
+		<input id="h" type="text" value="0">
+	</div>
+<p> Refresh the page after each throw </p>
+<script>
+
+	
+	console.time("test")
+	var t0 = new Date()
+	var t1 = new Date()
+	var laststate = "Color"
+	
+	
+	window.ondevicemotion = function(event) {
+		
+		var xVal = event.accelerationIncludingGravity.x;
+		var yVal = event.accelerationIncludingGravity.y;
+		var zVal = event.accelerationIncludingGravity.z;
+		
+		updatetextfield(xVal,yVal,zVal)
+		
+		if (Math.abs(xVal)<1 && Math.abs(yVal)<1 && Math.abs(zVal)<1) {
+			laststate == "white"
+			document.body.style.backgroundColor = "blue"
+			t0 = new Date()
+			updatetimefield(t0.getTime())
+			updateheightfield(9.81*0.125*(t0.getTime())*(t0.getTime())/1000000)
+			
+		} else {
+			laststate == "blue"
+			document.body.style.backgroundColor = "white"
+			updatetimefield(-t1.getTime()+t0.getTime())
+			updateheightfield((-t1.getTime()+t0.getTime())*(-t1.getTime()+t0.getTime())*9.81*0.125/1000000)	
+		}
+	
+	}
+
+	console.timeEnd("test")
+	
+	function updatetextfield(x, y, z) {
+		
+		document.getElementById("x").value =x;
+		document.getElementById("y").value =y;
+		document.getElementById("z").value =z;
+	}
+	
+	function updatetimefield(t) {
+		
+		document.getElementById("t").value =t;
+	}
+	
+	function updateheightfield(h) {
+		
+		document.getElementById("h").value =h;
+	}
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
